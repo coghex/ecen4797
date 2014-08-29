@@ -101,9 +101,9 @@
     The duty ratio is $D = \frac{V_{IN}}{V_{OUT}} = \frac{5}{20} = \frac{1}{4}$.
   \item{Sketch the waveform of the MOSFET drain-to-source voltage, $v_{DS}$. Label the numerical
     values of all relevant times and voltages.}\\
-    First we assume that the MOSFET is off, we see that $v_L = 0$ and $v_{DS}$ must be $V_{IN}$.
-    We can then set the MOSFET on, the voltage at this point becomes $0.3V$.  Or the voltage
-    $V_{GS} - V_{TH}$.
+    First we assume that the MOSFET is on, this means that the voltage accross the inductor is
+    $V_{L} = V_{IN}$.  And that means that $V_DS = 0V$.  When the MOSFET is off, we can see that
+    $V_{L} = V_{IN} - V_{OUT} = -15V$.  In this case, $V_{DS} = 20V$
     \begin{center}
     \begin{tikzpicture}
     \begin{axis}[
@@ -112,23 +112,24 @@
       axis x line*=left,
       axis y line*=center]
       \addplot [mark=none] coordinates {
-        (0, 5)
-        (0.25, 5)
-        (0.25, 0.3)
-        (1, 0.3)
-        (1, 5)
-        (1.25, 5)
-        (1.25, 0.3)
-        (2, 0.3)
-        (2, 5)
+        (0, 0)
+        (0.25, 0)
+        (0.25, 20)
+        (1, 20)
+        (1, 0)
+        (1.25, 0)
+        (1.25, 20)
+        (2, 20)
+        (2, 0)
       };
     \end{axis}
     \end{tikzpicture}
   \end{center}
 \item{Find the DC component of the voltage waveform of art (b). How does this value relate
     to the value of $V_{IN}$?  Does this make sense and why?}
-    The DC component of thi waveform is $1.25V$.  $V_{IN}$ is $5V$, this makes sense because
-    much of the power is lost in the transistor.
+    The DC component of this waveform is $15V$.  This input voltage is $5V$.  We can do this
+    because our output current will become lower than before.  This fact maintains the same
+    power.
 \end{enumerate}
 
 \end{document}
