@@ -96,7 +96,9 @@
 
 \answer{}
 
-\begin{enumerate}[a)]
+\textbf{1.1:}
+
+\begin{enumerate}[(a)]
   \item{What is the duty ratio, $D$, of the converter?}\\
     The duty ratio is $D = \frac{V_{IN}}{V_{OUT}} = \frac{5}{20} = \frac{1}{4}$.
   \item{Sketch the waveform of the MOSFET drain-to-source voltage, $v_{DS}$. Label the numerical
@@ -126,10 +128,119 @@
     \end{tikzpicture}
   \end{center}
 \item{Find the DC component of the voltage waveform of art (b). How does this value relate
-    to the value of $V_{IN}$?  Does this make sense and why?}
+    to the value of $V_{IN}$?  Does this make sense and why?}\\
     The DC component of this waveform is $15V$.  This input voltage is $5V$.  We can do this
     because our output current will become lower than before.  This fact maintains the same
     power.
+\end{enumerate}
+\newpage
+
+\textbf{1.2:}
+\begin{center}
+  \begin{circuitikz}[american]
+ \draw
+ (0,0) to [V,v=$V_g$] (0, 4) {}
+   to [short, -*] (2, 4) {}
+ (3, 4) to [short, *-] (7, 4) {}
+   to [R=$R$, v=$v$] (7, 0) {}
+   to [short] (0, 0) {}
+ (5, 4) to [C=$C$] (5, 0) {}
+ (2.5, 3) to [L=$L$, i=$i(t)$, *-] (2.5, 0) {}
+ (2.5, 3) to [short] (2.7, 4.2) {}
+;\end{circuitikz}
+\end{center}
+\begin{enumerate}[(a)]
+  \item{Find the dependence of the equilibrium output voltage $V$ and the inductor
+    current $i$ on the duty ratio $D_s$, input voltage $V_g$, and load resistance
+    $R$. You may assume that the inductor current ripple and capacitor voltage
+    ripple are small.}\\
+
+    When the switch is in the closed position (to the right), the circuit will look like:
+    \begin{center}
+    \begin{circuitikz}[american]
+     \draw
+     (0,0) to [V,v=$V_g$] (0, 4) {}
+       to [short, -*] (2, 4) {}
+     (3, 4) to [short, *-] (7, 4) {}
+       to [R=$R$, v=$v$] (7, 0) {}
+       to [short] (0, 0) {}
+     (5, 4) to [C=$C$] (5, 0) {}
+     (2.5, 3) to [L=$L$, i=$i(t)$, *-] (2.5, 0) {}
+     (2.5, 3) to [short] (2, 4) {}
+    ;\end{circuitikz}
+    \end{center}
+    We know that
+    \[
+      \frac{dI_L}{dt} = \frac{V_g}{L}
+    \]
+    The change in $I_L$ can thus be approximated by:
+    \[
+      \Delta I_L = \int_0^{DT}\frac{V_g}{L} = \frac{V_g DT}{L}
+    \]
+    When the circuit is in the open position, the current will flow through the inductor:
+    \[
+      \frac{dI_L}{dt} = \frac{V}{L}
+    \]
+    and similarily the change in the current will be:
+    \[
+      \Delta I_L = \int_0^{(1-D)T} = \frac{V(1-D)T}{L}
+    \]
+    Since we are in periodic steady state we know that these must be equal, and:
+    \[
+      \frac{V(1-D)T}{L} + \frac{V_g DT}{L} = 0 \Rightarrow \frac{V(1-D)T}{L} = -\frac{V_gDT}{L}
+    \]
+    \[
+      \frac{V}{V_g} = \frac{-D}{1-D} \Rightarrow V = \frac{DV_g}{D-1}
+    \]
+    To find the current we must first find the current throught the capacitor $i_C(t)$.
+    In the closed and open position these are:
+    \[
+      i_c(t) = \frac{-V}{R}, \text{ and } i_c(t) = -i_L - \frac{V}{R}
+    \]
+    Respectively. Since we are in periodic steady state we know that the average current
+    through the capacitor is going to be 0.  This means that
+    \[
+      \int_0^{DT}\frac{-V}{R}dt = \int_0^{(1-D)T}i_L + \frac{V}{R}dt
+    \]
+    \[
+      \frac{-VDT}{R} = \frac{V(1-D)T}{R} + (1-D)Ti_L
+    \]
+    \[
+      i_L = -\frac{VD + V(1-D)}{R(1-D)} \Rightarrow i_L = -\frac{V}{R(1-D)}
+    \]
+    and using our expression for the output voltage $V$ we find:
+    \[
+      i_L = \frac{VD}{R(1-D)^2}
+    \]
+
+  \item{Plot your results of part (a) over the range $0 \leq D \leq 1$}\\
+    \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+        xlabel=$D$,
+        ylabel={$V$, $I$},
+        yticklabels={,,}
+      ]
+    \addplot [domain=0:0.95, color=red] {x/((x-1))};
+    \addplot [domain=0:0.9, color=blue] {x/(((1-x)*(1-x)))};
+      \end{axis}
+    \end{tikzpicture}
+    \end{center}
+   Where the red value is the voltage and the blue value is the current.
+ \item{DC design: for the specifications:\\
+     \begin{center}
+     \begin{tabular}{ l l }
+     $V_g = 30V$ & $V = -20V$ \\
+     $R = 4 \Omega$ & $f_\Delta = 40kHz$ \\
+     \end{tabular}\\
+     \end{center}
+     \begin{enumerate}[(i)]
+       \item{Find $D$ and $I$.}
+       \item{Calculate the value of $L$ that will make the peak inductor current
+         ripple $\Delta i$ equal to ten percent of the average inductor current $I$.}
+     \end{enumerate}
+     }
+
 \end{enumerate}
 
 \end{document}
