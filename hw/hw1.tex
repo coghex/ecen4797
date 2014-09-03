@@ -100,7 +100,11 @@
 
 \begin{enumerate}[(a)]
   \item{What is the duty ratio, $D$, of the converter?}\\
-    The duty ratio is $D = \frac{V_{IN}}{V_{OUT}} = \frac{5}{20} = \frac{1}{4}$.
+    since:
+    \[
+      V = \frac{V_G}{1-D}
+    \]
+    The duty ratio is $D = \frac{-V_G}{V}+1 = -\frac{5}{20}+1 = \frac{3}{4}$.
   \item{Sketch the waveform of the MOSFET drain-to-source voltage, $v_{DS}$. Label the numerical
     values of all relevant times and voltages.}\\
     First we assume that the MOSFET is on, this means that the voltage accross the inductor is
@@ -166,7 +170,7 @@
        to [short] (0, 0) {}
      (5, 4) to [C=$C$] (5, 0) {}
      (2.5, 3) to [L=$L$, i=$i(t)$, *-] (2.5, 0) {}
-     (2.5, 3) to [short] (2, 4) {}
+     (2.5, 3) to [short] (3, 4) {}
     ;\end{circuitikz}
     \end{center}
     We know that
@@ -219,6 +223,8 @@
       \begin{axis}[
         xlabel=$D$,
         ylabel={$V$, $I$},
+        height=5cm,
+        width = 10cm,
         yticklabels={,,}
       ]
     \addplot [domain=0:0.95, color=red] {x/((x-1))};
@@ -235,12 +241,38 @@
      \end{tabular}\\
      \end{center}
      \begin{enumerate}[(i)]
-       \item{Find $D$ and $I$.}
+       \item{Find $D$ and $I$.}\\
+       We can use what we know from the last problem:
+       \[
+         V = \frac{DV_g}{D-1}
+       \]
+       \[
+         D = \frac{V}{V - V_g} = \frac{-20}{-50} = \frac{2}{5}
+       \]
+       To find $I$:
+       \[
+         I \approx i_L = \frac{VD}{R(1-D)^2} = \frac{-20 \cdot \frac{2}{5}}{4 \cdot \frac{9}{25}} = \frac{-50}{9}
+       \]
        \item{Calculate the value of $L$ that will make the peak inductor current
-         ripple $\Delta i$ equal to ten percent of the average inductor current $I$.}
+         ripple $\Delta i$ equal to ten percent of the average inductor current $I$.}\\
+         Using our result:
+       \[
+         \Delta I_L = \frac{V_g DT}{2L}
+       \]
+       \[
+         (0.10)\frac{50}{9} = \frac{30\cdot\frac{2}{5}}{2L\cdot40000} \Rightarrow L = 270\mu H
+       \]
+       \item{Choose $C$ such that the peak output voltage ripple $\Delta v$ is $0.1V$.}\\
+       First we find $i_c$:
+       \[
+         i_c = C\frac{dV_c}{dt} \Rightarrow \Delta V_c = \frac{IDT_s}{2C} \Rightarrow 0.1 = \frac{50}{9}\frac{\frac{2}{5}}{2C\cdot 40000}
+       \]
+       \[
+         C = 278\mu F
+       \]
+
      \end{enumerate}
      }
-
 \end{enumerate}
 
 \end{document}
