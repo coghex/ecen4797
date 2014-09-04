@@ -214,7 +214,7 @@
     \]
     and using our expression for the output voltage $V$ we find:
     \[
-      i_L = \frac{VD}{R(1-D)^2}
+      i_L = \frac{V_gD}{R(1-D)^2}
     \]
 
   \item{Plot your results of part (a) over the range $0 \leq D \leq 1$}\\
@@ -251,7 +251,7 @@
        \]
        To find $I$:
        \[
-         I \approx i_L = \frac{VD}{R(1-D)^2} = \frac{-20 \cdot \frac{2}{5}}{4 \cdot \frac{9}{25}} = \frac{-50}{9}
+         I \approx i_L = \frac{V_gD}{R(1-D)^2} = \frac{30 \cdot \frac{2}{5}}{4 \cdot \frac{9}{25}} = \frac{25}{3}
        \]
        \item{Calculate the value of $L$ that will make the peak inductor current
          ripple $\Delta i$ equal to ten percent of the average inductor current $I$.}\\
@@ -260,15 +260,15 @@
          \Delta I_L = \frac{V_g DT}{2L}
        \]
        \[
-         (0.10)\frac{50}{9} = \frac{30\cdot\frac{2}{5}}{2L\cdot40000} \Rightarrow L = 270\mu H
+         (0.10)\frac{25}{3} = \frac{30\cdot\frac{2}{5}}{2L\cdot40000} \Rightarrow L = 180\mu H
        \]
        \item{Choose $C$ such that the peak output voltage ripple $\Delta v$ is $0.1V$.}\\
        First we find $i_c$:
        \[
-         i_c = C\frac{dV_c}{dt} \Rightarrow \Delta V_c = \frac{IDT_s}{2C} \Rightarrow 0.1 = \frac{50}{9}\frac{\frac{2}{5}}{2C\cdot 40000}
+         i_c = C\frac{dV_c}{dt} \Rightarrow \Delta V_c = \frac{IDT_s}{2C} \Rightarrow 0.1 = \frac{25}{3}\frac{\frac{2}{5}}{2C\cdot 40000}
        \]
        \[
-         C = 278\mu F
+         C = 417\mu F
        \]
 
      \end{enumerate}
