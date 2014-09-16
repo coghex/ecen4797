@@ -1,0 +1,241 @@
+\documentclass[12pt, notitlepage, final]{article} 
+
+\newcommand{\name}{Vince Coghlan}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage{setspace}
+\usepackage[pdftex]{graphicx}
+\usepackage{epstopdf}
+\usepackage[siunitx]{circuitikz}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{cancel}
+\usepackage{pgfplots}
+\usepackage{setspace}
+\usepackage{overpic}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{color}
+
+\numberwithin{equation}{section}
+\DeclareRobustCommand{\beginProtected}[1]{\begin{#1}}
+\DeclareRobustCommand{\endProtected}[1]{\end{#1}}
+\newcommand{\dbr}[1]{d_{\mbox{#1BR}}}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{define}{Definition}
+\newcommand{\column}[2]{
+\left( \begin{array}{ccc}
+#1 \\
+#2
+\end{array} \right)}
+
+\newdimen\digitwidth
+\settowidth\digitwidth{0}
+\def~{\hspace{\digitwidth}}
+
+\setlength{\parskip}{1pc}
+\setlength{\parindent}{0pt}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{9.0in}
+\setlength{\oddsidemargin}{0pc}
+\setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+\newcommand{\answer}[1]{\newpage\noindent\framebox{\vbox{{\bf ECEN 4797 Fall 2014}
+\hfill {\bf \name} \vspace{-1cm}
+\begin{center}{Homework \#3}\end{center} } }\bigskip }
+
+%absolute value code
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+\def\dbar{{\mathchar'26\mkern-12mu d}}
+\def \Frac{\displaystyle\frac}
+\def \Sum{\displaystyle\sum}
+\def \Int{\displaystyle\int}
+\def \Prod{\displaystyle\prod}
+\def \P[x]{\Frac{\partial}{\partial x}}
+\def \D[x]{\Frac{d}{dx}}
+\newcommand{\PD}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\PF}[1]{\frac{\partial}{\partial#1}}
+\newcommand{\DD}[2]{\frac{d#1}{d#2}}
+\newcommand{\DF}[1]{\frac{d}{d#1}}
+\newcommand{\fix}[2]{\left(#1\right)_#2}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\bopk}[3]{\langle #1 | #2 | #3 \rangle}
+\newcommand{\Choose}[2]{\displaystyle {#1 \choose #2}}
+\newcommand{\proj}[1]{\ket{#1}\bra{#1}}
+\def\del{\vec{\nabla}}
+\newcommand{\avg}[1]{\langle#1\rangle}
+\newcommand{\piecewise}[4]{\left\{\beginProtected{array}{rl}#1&:#2\\#3&:#4\endProtected{array}\right.}
+\newcommand{\systeme}[2]{\left\{\beginProtected{array}{rl}#1\\#2\endProtected{array}\right.}
+\def \KE{K\!E}
+\def\Godel{G$\ddot{\mbox{o}}$del}
+
+\onehalfspacing
+
+\begin{document}
+
+\answer{}
+
+\textbf{3.1:} The input voltage $V_g$ is dc an positive with the polarity shown.
+Specify how to implement the switches using a minimal number of diodes and
+transistors, such that the converter operates over the entire range of duty cycles
+$0 \leq D \leq 1$. THe switch states should vary as shown.  You may assume that the
+inductor current ripples and capacitor voltage ripples are small.
+\begin{enumerate}[(a)]
+  \item{} Realize the switches using SPST ideal switches, and explicitly define
+    the voltage and current of each switch.\\
+    The new circuit would look like:
+    \begin{center}
+      \begin{circuitikz}[american]
+       \draw
+       (0, 0) to [V=$V_g$] (0, 5)
+         to [short] (1, 5)
+         to [ospst=$S_1$, v=$V_{S_1}$, i=$I_{S_1}$] (3, 5)
+         to [short] (4, 5)
+         to [cspst=$S_2$, v=$V_{S_2}$, i=$I_{S_2}$] (6, 5)
+       (3.5, 5) to [L=$L$, v=$V_L$, i=$I_L$] (3.5, 2)
+       (1, 5) to [short] (1, 2)
+       to [cspst=$S_3$, v=$V_{S_3}$, i=$I_{S_3}$] (3, 2)
+         to [short] (4, 2)
+         to [ospst=$S_4$, v=$V_{S_4}$, i=$I_{S_4}$] (6, 2)
+         to [short] (6, 0)
+       (0, 0) to [short] (10, 0)
+         to [R=$R$] (10, 5)
+         to [short] (6, 5)
+       (8, 5) to [C=$C$, v=$V_C$] (8, 0)
+      ;\end{circuitikz}
+    \end{center}
+  \item{} Express the on-state current and off-state voltage of each SPST switch in terms
+    of the converter inductor currents, capacitor voltages, and/or input source voltage.
+
+    In position 1, $S_2$ and $S_3$ are both closed and $S_1$ and $S_4$ are both open.
+    This is the inverse in position 2.  We can find the voltages and currents, in
+    position 1:
+    \[
+      V_{S_2} = 0\text{, }V_{S_3}=0\text{, }I_{S_1}=0\text{, }I_{S_4}=0
+    \]
+    \[
+      V_{S_4}=V_g\text{, }V_{S_1}=V_L=V_C-V_g\text{, }I_{S_3}=I_{S_2}=I_L
+    \]
+    In position two:
+    \[
+      V_{S_1} = 0\text{, }V_{S_4}=0\text{, }I_{S_2}=0\text{, }I_{S_3}=0
+    \]
+    \[
+      V_{S_2}=V_C-V_g\text{, }V_{S_3}=V_L=V_g\text{, }I_{S_1}=I_{S_4}=-I_L
+    \]
+    \item{} Solve the converter to determine the inductor currents and capacitor voltages,
+      as in chapter 2.\\
+      To do this we must use KVL and KCL, in position 1:
+      \[
+        V_L = V_C - V_G \text{, } I_C = I_L - \frac{V}{R}
+      \]
+      In position 2:
+      \[
+        V_L = V_G\text{, } I_C = -\frac{V}{R}
+      \]
+      We then use our knowledge of the capacitor charge balance:
+      \[
+        (I_L-\frac{V}{R})DT_S + (-\frac{V}{R})(1-D)T_S = 0
+      \]
+      \[
+        I_LD - \frac{V}{R} = 0 \Rightarrow I_L = \frac{V}{RD}
+      \]
+      And inductor current balance:
+      \[
+        (V_C-V_G)D + V_G(1-D) = 0
+      \]
+      \[
+        V_CD - V_GD + V_G - V_GD = 0
+      \]
+      \[
+        V_C = 2V_G+\frac{V_G}{D}
+      \]
+      Combining these we find that:
+      \[
+        I_L = \frac{2V_G+\frac{V_G}{D}}{RD}\text{ and } V_C = 2V_G+\frac{V_G}{D}
+      \]
+    \item{} Determine the polarities of the switch on-state currents and off-state
+      voltages. Do the polarities vary with duty cycle?\\
+      Using the same knowledge from part (b), we only need $V_C$ and $I_L$.  In position
+      1 we can see that:
+      \[
+        V_{S_1} = V_C - V_G = V_G + \frac{V_G}{D}
+      \]
+      Which is always positive, additionally:
+      \[
+        I_{S_3}=I_{S_2}=I_L = \frac{V}{RD}
+      \]
+      Which is also always positive
+      \[
+      V_{S_2} = 0\text{, }V_{S_3}=0\text{, }I_{S_1}=0\text{, }I_{S_4}=0
+    \]
+    \[
+      V_{S_4}=\text{positive, }V_{S_1}=\text{positive, }I_{S_3}=I_{S_2}=\text{positive}
+    \]
+    In position two:
+    \[
+      V_{S_1} = 0\text{, }V_{S_4}=0\text{, }I_{S_2}=0\text{, }I_{S_3}=0
+    \]
+    \[
+      V_{S_2}=\text{positive, }V_{S_3}=\text{positive, }I_{S_1}=I_{S_4}=\text{positive}
+    \]
+  \item{} State how each switch can be realized using transistors and/or diodes, and
+    whether the realization requires single-quadrant, current-bidirectional two-quadrant,
+    coltage-bidirectional two-quadrant, or four-quadrant switches.\\
+
+    We need both voltage and current in only one direction, this means we can use single
+    quadrant switchs.  An efficient way would be to replace all of the SPST switches with
+    BJTs.  This would provide the same I-V charachteristics as the SPST switches.
+
+  \item{} draw the converter circuit, including your realization of the switch elements
+    using MOSFETs and diodes.
+    \begin{center}
+      \begin{circuitikz}[american]
+       \draw
+       (0, 0) to [V=$V_g$] (0, 5)
+         to [short] (1.5, 5)
+         (2, 5) node[npn,rotate=90] (b1) {}
+         (2.5, 5) to [short] (4.5, 5)
+         (5, 5) node[npn,rotate=90] (b2) {}
+       (3.5, 5) to [L=$L$, v=$V_L$, i=$I_L$] (3.5, 2)
+       (1, 5) to [short] (1, 2)
+           to [short] (1.5, 2)
+         (2, 2) node[npn,rotate=90] (b3) {}
+       (2.5, 2) to [short] (4.5, 2)
+           (5, 2) node[npn,rotate=90] (b4) {}
+           (5.5, 2) to [short] (6, 2)
+           to [short] (6, 0)
+       (0, 0) to [short] (10, 0)
+         to [R=$R$] (10, 5)
+         to [short] (5.5, 5)
+       (8, 5) to [C=$C$, v=$V_C$] (8, 0)
+      ;\end{circuitikz}
+    \end{center}
+
+    The porblem says It should use MOSFETs, simply replacing the BJTs with MOSFET should
+    provide the same behavior.
+
+\end{enumerate}
+
+\end{document}
