@@ -135,78 +135,94 @@ inductor current ripples and capacitor voltage ripples are small.
       V_{S_2} = 0\text{, }V_{S_3}=0\text{, }I_{S_1}=0\text{, }I_{S_4}=0
     \]
     \[
-      V_{S_4}=V_g\text{, }V_{S_1}=V_L=V_C-V_g\text{, }I_{S_3}=I_{S_2}=I_L
+      V_{S_4}=V_g\text{, }V_{S_1}=V_L=V_g-V_C\text{, }I_{S_3}=I_{S_2}=-I_L
     \]
     In position two:
     \[
       V_{S_1} = 0\text{, }V_{S_4}=0\text{, }I_{S_2}=0\text{, }I_{S_3}=0
     \]
     \[
-      V_{S_2}=V_C-V_g\text{, }V_{S_3}=V_L=V_g\text{, }I_{S_1}=I_{S_4}=-I_L
+      V_{S_2}=V_g-V_C\text{, }V_{S_3}=V_g\text{, }I_{S_1}=I_{S_4}=I_L
     \]
     \item{} Solve the converter to determine the inductor currents and capacitor voltages,
       as in chapter 2.\\
       To do this we must use KVL and KCL, in position 1:
       \[
-        V_L = V_C - V_G \text{, } I_C = I_L - \frac{V}{R}
+        V_L = V_C - V_G \text{, } I_C = -\frac{V}{R} - I_L
       \]
       In position 2:
       \[
         V_L = V_G\text{, } I_C = -\frac{V}{R}
       \]
-      We then use our knowledge of the capacitor charge balance:
+      We then use our knowledge of the inductor current balance:
       \[
-        (I_L-\frac{V}{R})DT_S + (-\frac{V}{R})(1-D)T_S = 0
+        (-\frac{V}{R})DT_S + (-\frac{V}{R}-I_L)(1-D)T_S = 0
       \]
       \[
-        I_LD - \frac{V}{R} = 0 \Rightarrow I_L = \frac{V}{RD}
+        I_L = \frac{V}{R(D-1)}
       \]
-      And inductor current balance:
+      And capacitor charge balance:
       \[
-        (V_C-V_G)D + V_G(1-D) = 0
-      \]
-      \[
-        V_CD - V_GD + V_G - V_GD = 0
+        (V_g)D + (V_G-V_C)(1-D) = 0
       \]
       \[
-        V_C = 2V_G+\frac{V_G}{D}
+        2V_GD - V_g + V_C - V_CD = 0
+      \]
+      \[
+        V_C = \frac{(1-2D)V_g}{1-D}
       \]
       Combining these we find that:
       \[
-        I_L = \frac{2V_G+\frac{V_G}{D}}{RD}\text{ and } V_C = 2V_G+\frac{V_G}{D}
+        I_L = \frac{(1-2D)V_g}{R(1-D)(D-1)}\text{ and } V_C = \frac{(1-2D)V_g}{1-D}
       \]
     \item{} Determine the polarities of the switch on-state currents and off-state
       voltages. Do the polarities vary with duty cycle?\\
       Using the same knowledge from part (b), we only need $V_C$ and $I_L$.  In position
       1 we can see that:
       \[
-        V_{S_1} = V_C - V_G = V_G + \frac{V_G}{D}
+        V_{S_1} = V_g-V_C = V_g - \frac{(1-2D)V_g}{1-D}
       \]
       Which is always positive, additionally:
       \[
-        I_{S_3}=I_{S_2}=I_L = \frac{V}{RD}
+        I_{S_3}=I_{S_2}=-I_L = -\frac{(1-2D)V_g}{R(1-D)(D-1)}
       \]
-      Which is also always positive
+      Which is positive for $D<0.5$ and negative for $D>0.5$. we know from before:
       \[
       V_{S_2} = 0\text{, }V_{S_3}=0\text{, }I_{S_1}=0\text{, }I_{S_4}=0
     \]
-    \[
-      V_{S_4}=\text{positive, }V_{S_1}=\text{positive, }I_{S_3}=I_{S_2}=\text{positive}
-    \]
     In position two:
+    \[
+      V_{S_2}=V_g - V_C= V_g - \frac{(1-2D)V_g}{1-D}
+    \]
+    which is positive, and:
+    \[
+      I_{S_1} = I_L = \frac{(1-2D)V_g}{R(1-D)(D-1)}
+    \]
+    Which is positive for $D>0.5$ and negative for $D<0.5$.  In all this tells us that
+    in position 1:
+    \[
+      V_{S_2} = 0\text{, }V_{S_3}=0\text{, }I_{S_1}=0\text{, }I_{S_4}=0
+    \]
+    \[
+      V_{S_4}=\text{positive, }V_{S_1}=\text{positive, }I_{S_3}=I_{S_2}=\text{positive for $D<0.5$, negative for $D>0.5$}
+    \]
+    And in position two:
     \[
       V_{S_1} = 0\text{, }V_{S_4}=0\text{, }I_{S_2}=0\text{, }I_{S_3}=0
     \]
     \[
-      V_{S_2}=\text{positive, }V_{S_3}=\text{positive, }I_{S_1}=I_{S_4}=\text{positive}
+      V_{S_2}=\text{positive, }V_{S_3}=\text{positive, }I_{S_1}=I_{S_4}=\text{positive for $D>0.5$, negative for $D<0.5$}
     \]
+
   \item{} State how each switch can be realized using transistors and/or diodes, and
     whether the realization requires single-quadrant, current-bidirectional two-quadrant,
     coltage-bidirectional two-quadrant, or four-quadrant switches.\\
 
-    We need both voltage and current in only one direction, this means we can use single
-    quadrant switchs.  An efficient way would be to replace all of the SPST switches with
-    BJTs.  This would provide the same I-V charachteristics as the SPST switches.
+    We need voltage to only go in one direction (positive) but current must be able to
+    go in both directions in all switches.  That means current-bidirectional two-quadrant
+    switches.  The component that best realizes this is a MOSFET.  We would need four
+    of them.
+
 
   \item{} draw the converter circuit, including your realization of the switch elements
     using MOSFETs and diodes.
@@ -215,15 +231,15 @@ inductor current ripples and capacitor voltage ripples are small.
        \draw
        (0, 0) to [V=$V_g$] (0, 5)
          to [short] (1.5, 5)
-         (2, 5) node[npn,rotate=90] (b1) {}
+         (2, 5) node[nmos,rotate=90] (b1) {}
          (2.5, 5) to [short] (4.5, 5)
-         (5, 5) node[npn,rotate=90] (b2) {}
+         (5, 5) node[nmos,rotate=90] (b2) {}
        (3.5, 5) to [L=$L$, v=$V_L$, i=$I_L$] (3.5, 2)
        (1, 5) to [short] (1, 2)
            to [short] (1.5, 2)
-         (2, 2) node[npn,rotate=90] (b3) {}
+         (2, 2) node[nmos,rotate=90] (b3) {}
        (2.5, 2) to [short] (4.5, 2)
-           (5, 2) node[npn,rotate=90] (b4) {}
+           (5, 2) node[nmos,rotate=90] (b4) {}
            (5.5, 2) to [short] (6, 2)
            to [short] (6, 0)
        (0, 0) to [short] (10, 0)
@@ -233,8 +249,167 @@ inductor current ripples and capacitor voltage ripples are small.
       ;\end{circuitikz}
     \end{center}
 
-    The porblem says It should use MOSFETs, simply replacing the BJTs with MOSFET should
-    provide the same behavior.
+\end{enumerate}
+
+\textbf{3.2:} The input voltage $V_g$ is dc an positive with the polarity shown.
+Specify how to implement the switches using a minimal number of diodes and
+transistors, such that the converter operates over the entire range of duty cycles
+$0 \leq D \leq 1$. THe switch states should vary as shown.  You may assume that the
+inductor current ripples and capacitor voltage ripples are small.
+\begin{enumerate}[(a)]
+  \item{} Realize the switches using SPST ideal switches, and explicitly define
+    the voltage and current of each switch.\\
+    The new circuit would look like:
+    \begin{center}
+      \begin{circuitikz}[american]
+       \draw
+       (0, 0) to [V=$V_g$] (0, 3)
+         to [ospst, v=$V_1$, i=$I_1$] (3, 3)
+         to [C=$C$, v=$V_{C_1}$] (5, 3)
+         to [L=$L$, i=$I_{L_1}$] (7, 3)
+         to [short] (9, 3)
+         to [R=$R$] (9, 0)
+         to [short] (0, 0)
+       (3, 3) to [L=$L$, i=$I_{L_2}$] (3, 0)
+       (5, 3) to [cspst, v=$V_2$, i=$I_2$] (5, 0)
+       (7, 3) to [C=$C$, v=$V_{C_2}$] (7, 0)
+
+     ;\end{circuitikz}
+    \end{center}
+  \item{} Express the on-state current and off-state voltage of each SPST switch in terms
+  of the converter inductor currents, capacitor voltages, and/or input source voltage.\\
+  In position 1, we can see that:
+  \[
+    V_1 = V_g - V_{C_1}\text{ and }V_2=0
+  \]
+  \[
+    I_1 = 0\text{ and }I_2 = I_{L_1}
+  \]
+  In position 2:
+  \[
+    V_1 = 0\text{ and }V_2=V_g - V_{C_1}
+  \]
+  \[
+    I_1 = I_{L_2}\text{ and }I_2=0
+  \]
+  \item{} Solve the converter to determine the inductor currents and capacitor voltages,
+      as in chapter 2.\\
+  First we can use KVL when we are in state 1:
+  \[
+    V_{L_1} = V_{C_2}\text{ and }V_{L_2} = -V_{C_1}
+  \]
+  \[
+    I_{C_1}=-I_{L_2}\text{ and }I_{C_2}=I_{L_1}-\frac{V_{C_2}}{R}
+  \]
+  in state 2:
+  \[
+    V_{L_1} = V_g - V_{C_1} - V_{C_2}\text{ and }V_{L_2} = V_g
+  \]
+  \[
+    I_{C_1}=I_{L_1}\text{ and }I_{C_2}=I_{L_1}-\frac{V_{C_2}}{R}
+  \]
+  We can solve these:
+  \[
+    D(V_{C_2}) + (1-D)(V_g - V_{C_1} - V_{C_2}) = 0
+  \]
+  \[
+    (2D-1)V_{C_2} + (D-1)V_{C_1} + (D-1)V_g = 0
+  \]
+  \[
+    D(-V_{C_1}) + (1-D)(V_g) = 0
+  \]
+  \[
+    V_{C_1} = \frac{1-D}{D}V_g
+  \]
+  \[
+    D(-I_{L_2}) + (1-D)(I_{L_1}) = 0
+  \]
+  \[
+    I_{L_2} = \frac{1-D}{D}I_{L_1}
+  \]
+  \[
+    I_{L_1} = \frac{V_{C_2}}{R}
+  \]
+  Thats a lot of unknowns and a lot of equations, but I think we can do this. Plugging in
+  our equation for $V_{C_1}$ into the first equation we find that:
+  \[
+    V_{C_2} = \frac{D-1}{D}V_g
+  \]
+  That means that:
+  \[
+    I_{L_1} = \frac{D-1}{DR}V_g
+  \]
+  and
+  \[
+    I_{L_2} = \frac{(D-1)(1-D)}{D^2R}V_g
+  \]
+  and as we know:
+  \[
+    V_{C_1} = \frac{1-D}{D}V_g
+  \]
+  \item{} Determine the polarities of the switch on-state currents and off-state
+  voltages. Do the polarities vary with duty cycle?\\
+  Going back to part (b) we find that in position 1:
+  \[
+    V_1 = V_g - \frac{1-D}{D}V_g\text{ and }V_2=0
+  \]
+  \[
+    I_1 = 0\text{ and }I_2 = \frac{D-1}{DR}V_g
+  \]
+  In position 2:
+  \[
+    V_1 = 0\text{ and }V_2=V_g - \frac{1-D}{D}V_g
+  \]
+  \[
+    I_1 = \frac{(D-1)(1-D)}{D^2R}V_g\text{ and }I_2=0
+  \]
+
+  Which, it can be easily shown, that in position 1:
+  \[
+    V_1 =\text{positive for $D>0.5$, negative for $D<0.5$ and }V_2=0
+  \]
+  \[
+    I_1 = 0\text{ and }I_2 = \text{negative}
+  \]
+  In position 2:
+  \[
+    V_1 = 0\text{ and }V_2=\text{positive for $D>0.5$, negative for $D<0.5$}
+  \]
+  \[
+    I_1 = \text{positive and }I_2=0
+  \]
+  \item{} State how each switch can be realized using transistors and/or diodes, and
+    whether the realization requires single-quadrant, current-bidirectional two-quadrant,
+    voltage-bidirectional two-quadrant, or four-quadrant switches.\\
+
+    Both switches myst have bidirectional voltage two quadrant switches, but only require
+    one direction of current.  This can be realized with each switch consisting of
+    a MOSFET and a diode, as shown in the next part.
+
+  \item{} draw the converter circuit, including your realization of the switch elements
+    using MOSFETs and diodes.
+    \begin{center}
+      \begin{circuitikz}[american]
+       \draw
+       (0, 0) to [V=$V_g$] (0, 3)
+         to [D*] (1.5, 3)
+       (2,3) node[nmos, rotate=90] (n) {}
+       (2.5, 3) to [short] (3, 3)
+         to [C=$C$] (5, 3)
+         to [L=$L$] (7, 3)
+         to [short] (9, 3)
+         to [R=$R$] (9, 0)
+         to [short] (0, 0)
+       (3, 3) to [L=$L$] (3, 0)
+       (5, 3) to [D*] (5, 1.5)
+       (5, 1) node[nmos] (m) {}
+       (5, 0.5) to [short] (5, 0)
+       (7, 3) to [C=$C$] (7, 0)
+
+     ;\end{circuitikz}
+    \end{center}
+
+
 
 \end{enumerate}
 
