@@ -126,15 +126,18 @@ operates with input voltage $V_g = 400V$, output voltage $V=200V$, and load curr
     \[
       P = I\cdot V = D\cdot 10\cdot 2.5 + D'\cdot 10\cdot 1.5 = 25D + 15D'
     \]
+    With this information, we can solve for $D$. If this is an ideal Buck Converter, than the
+    ratio of voltage out over voltage in will be equal to the duty cycle.  This means that
+    our duty cycle is 0.5, and our power lost is 20W.
 
   \item{Sketch the converter efficiency over the range of switching frequencies $1\text{kHz}
     \leq f_g \leq 100\text{kHz}$}, and label numerical values.\\
     Efficiency is defined as $\frac{P_{\text{out}}}{P_{\text{in}}}$ and can be calculated as:
     \[
-      \eta = \frac{P_{\text{out}}}{P_{\text{out}}-P_{\text{loss}}}
+      \eta = \frac{P_{\text{out}}}{P_{\text{out}}-P_{\text{loss}}-P_{\text{switch}-P_{\text{switch}}}}
     \]
     \[
-      \eta = \frac{200\cdot10}{200\cdot10 - 25D-15(1-D)}
+      \eta = \frac{200\cdot10}{200\cdot10 - 20 - 0.00175\cdot f}
     \]
     This looks like:
     \begin{figure}[H]
@@ -158,6 +161,68 @@ that accounts for the loss elements described above.
 \includegraphics[width=10cm]{f3}
 \end{center}
 \end{figure}
+
+We can begin by finding the average currents and voltages:
+\[
+  V_L = V_g - i_LR_L
+\]
+\[
+  V_L = V - i_LR_L
+\]
+\[
+  i_C = \frac{-V}{R}
+\]
+\[
+  i_C = -i_L - \frac{V}{R}
+\]
+These make (including the equation for $i_g$):
+\[
+  0 = V_gD + VD'-I_LR_L
+\]
+\[
+  0 = \frac{-V}{R} - I_LD'
+\]
+\[
+  0 = DI_L+\frac{I_Lt_r}{T_S} + \frac{Q_r}{T_s}
+\]
+
+Our equivalent circuit will look like this:
+\begin{center}
+  \begin{circuitikz}[american]
+    \draw
+    (0,0) to[V=$V_g$] (0,3)
+      to[short] (8,3)
+    (0,0) to[short] (8,0)
+      to[I=$I_LD'$] (8,3)
+    (2,3) to[I=$\frac{I_Lt_r}{T_s}$] (2,0)
+    (4,3) to[I=$\frac{Q_r}{T_s}$] (4,0)
+    (10,3) to[V=$DV_g$] (10,0)
+      to[short] (13,0)
+      to[R=$R$] (13,3)
+      to[R=$\frac{R_LD'^2}{D}$] (10,3)
+    ;\end{circuitikz}
+\end{center}
+With a transformer:
+\begin{center}
+  \begin{circuitikz}[american]
+    \draw
+    (9,3) node[transformer](T) {} node[above] {${D'}^2 : 1$}
+    (0,0) to[V=$V_g$] (0,3)
+      to[short] (T.A1)
+    (0,0) to[short] (6,0)
+      to [short] (6, 0.9)
+      to [short] (T.A2)
+
+    (2,3) to[I=$\frac{I_Lt_r}{T_s}$] (2,0)
+    (4,3) to[I=$\frac{Q_r}{T_s}$] (4,0)
+    (11,0) to[short] (13,0)
+      to[R=$R$] (13,3)
+      to[R=$\frac{R_LD'^2}{D}$] (T.B1)
+    (11,0) to[short] (11,0)
+      to[short] (11,0.9)
+      to[short] (T.B2)
+    ;\end{circuitikz}
+\end{center}
 
 
 

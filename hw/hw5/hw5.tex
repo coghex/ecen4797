@@ -1,0 +1,128 @@
+\documentclass[12pt, notitlepage, final]{article} 
+
+\newcommand{\name}{Vince Coghlan}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{amsthm}
+\usepackage{nccmath}
+\usepackage{setspace}
+\usepackage[pdftex]{graphicx}
+\usepackage{epstopdf}
+\usepackage[siunitx]{circuitikz}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{cancel}
+\usepackage{pgfplots}
+\usepackage{setspace}
+\usepackage{overpic}
+\usepackage{mathtools}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{gensymb}
+
+\numberwithin{equation}{section}
+\DeclareRobustCommand{\beginProtected}[1]{\begin{#1}}
+\DeclareRobustCommand{\endProtected}[1]{\end{#1}}
+\newcommand{\dbr}[1]{d_{\mbox{#1BR}}}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{define}{Definition}
+\newcommand{\column}[2]{
+\left( \begin{array}{ccc}
+#1 \\
+#2
+\end{array} \right)}
+
+\newdimen\digitwidth
+\settowidth\digitwidth{0}
+\def~{\hspace{\digitwidth}}
+
+\setlength{\parskip}{1pc}
+\setlength{\parindent}{0pt}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{9.0in}
+\setlength{\oddsidemargin}{0pc}
+\setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+\newcommand{\answer}[1]{\newpage\noindent\framebox{\vbox{{\bf ECEN 4797 Fall 2014}
+\hfill {\bf \name} \vspace{-1cm}
+\begin{center}{Homework \#5}\end{center} } }\bigskip }
+
+%absolute value code
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+\def\dbar{{\mathchar'26\mkern-12mu d}}
+\def \Frac{\displaystyle\frac}
+\def \Sum{\displaystyle\sum}
+\def \Int{\displaystyle\int}
+\def \Prod{\displaystyle\prod}
+\def \P[x]{\Frac{\partial}{\partial x}}
+\def \D[x]{\Frac{d}{dx}}
+\newcommand{\PD}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\PF}[1]{\frac{\partial}{\partial#1}}
+\newcommand{\DD}[2]{\frac{d#1}{d#2}}
+\newcommand{\DF}[1]{\frac{d}{d#1}}
+\newcommand{\fix}[2]{\left(#1\right)_#2}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle#1|}
+\newcommand{\braket}[2]{\langle #1 | #2 \rangle}
+\newcommand{\bopk}[3]{\langle #1 | #2 | #3 \rangle}
+\newcommand{\Choose}[2]{\displaystyle {#1 \choose #2}}
+\newcommand{\proj}[1]{\ket{#1}\bra{#1}}
+\def\del{\vec{\nabla}}
+\newcommand{\avg}[1]{\langle#1\rangle}
+\newcommand{\piecewise}[4]{\left\{\beginProtected{array}{rl}#1&:#2\\#3&:#4\endProtected{array}\right.}
+\newcommand{\systeme}[2]{\left\{\beginProtected{array}{rl}#1\\#2\endProtected{array}\right.}
+\def \KE{K\!E}
+\def\Godel{G$\ddot{\mbox{o}}$del}
+
+\onehalfspacing
+
+\begin{document}
+
+\answer{}
+
+\textbf{5.1:} This problem uses information extracted from portions of the data sheet
+for a Vishay Siliconix power MOSFET SiHF620 (the full datasheet is available at
+\url{http://www.vishay.com/docs/91027/sihf620.pdf)}. The on- state resistance of this MOSFET
+($R_\text{DS(on)}$) is $0.8\Omega$ at $25\degree$ C. This on-state resistance varies with junction
+temperature, as illustrated in Fig. 4 (note that Fig.4 plots the normalized variation).
+The junction-to-case thermal resistance ($R_\text{thJC}$) is $2.5\degree$ C/W (see above table).
+Also the junction-to-case transient thermal impedance versus pulse duration, for a single
+rectangular power dissipation pulse and repeated pulses of different duty ratios, is
+given in Fig. 11. For both parts of this problem assume that the maximum allowable
+junction temperature ($T_J$) is $140\degree$ C and the maximum ambient temperature ($T_A$)
+is $50 \degree$ C.
+
+\begin{enumerate}[(a)]
+  \item{}The MOSFET is first attached to a heat sink using an insulating pad resulting
+    in a case-to-sink thermal resistance ($R_\text{thCS}$) of $0.75\degree$ C/W. Assuming that the
+    MOSFET must carry a (forward) rms current of 2.5 A, and that switching losses can be
+    ignored, what is the maximum allowable thermal resistance of the heat sink ($R_{\text{thSA}}$)?
+  \item{}The MOSFET is now instead operated in a pulsed fashion, carrying rectangular pulses
+    of current of magnitude $I_p$, 1 ms in duration with 99 ms of off time between pulses.
+    If the MOSFET is mounted to an extremely good heat sink that maintains the case temperature
+    at $50\degree$ C, what is the maximum allowable current pulse magnitude ($I_p$)? You may assume
+    that the MOSFET on-state resistance is always at its $140\degree$ C value.
+\end{enumerate}
+
+
+
+
+\end{document}
